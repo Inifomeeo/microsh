@@ -5,7 +5,8 @@
 
 #include "tokenizer.h"
 
-char **tokenize_input(char *input) {
+char **tokenize_input(char *input)
+{
     char **tokens = malloc(10 * sizeof(char*));
     if (tokens == NULL) {
         perror("malloc");
