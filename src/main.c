@@ -39,6 +39,15 @@ int main()
             continue;
         }
 
+        // Exit builtin
+        if (strcmp(command[0], "exit") == 0) {
+            if (atoi(command[1]) >= 0  && atoi(command[1]) <= 255) {
+                exit(atoi(command[1]));
+            } else {
+                exit(0);
+            }
+        }
+
         pid = fork();
         if (pid == 0) {
             if (execvp(command[0], command) < 0) {
