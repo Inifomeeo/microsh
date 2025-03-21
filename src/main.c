@@ -17,8 +17,7 @@ int main()
     int buf_size = 128;
     int stat_loc;
     
-    while (1)
-    {
+    while (1) {
         // Print prompt
         printf("$ ");
         fflush(stdout);

@@ -1,1 +1,1 @@
-char **tokenize_input(char *input, char*delim);
+char **tokenize_input(char *input, char *delim);
