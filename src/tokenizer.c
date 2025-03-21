@@ -6,7 +6,7 @@
 #include "tokenizer.h"
 
 // Split input into tokens separated by a space
-char **tokenize_input(char *input)
+char **tokenize_input(char *input, char *delim)
 {
     int buf_size = 10;
     int index = 0;
@@ -17,7 +17,7 @@ char **tokenize_input(char *input)
     }
     char *token;
 
-    token = strtok(input, " ");
+    token = strtok(input, delim);
     while (token != NULL) {
         tokens[index] = token;
         index++;
@@ -31,7 +31,7 @@ char **tokenize_input(char *input)
             }
         }
 
-        token = strtok(NULL, " ");
+        token = strtok(NULL, delim);
     }
 
     tokens[index] = NULL;

@@ -33,7 +33,7 @@ int main()
         fgets(input, buf_size, stdin);
         input[strcspn(input, "\r\n")] = 0;
 
-        command = tokenize_input(input);
+        command = tokenize_input(input, " ");
         if (!command[0]) {
             free(input);
             free(command);
