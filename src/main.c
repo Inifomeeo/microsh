@@ -11,6 +11,7 @@
 int main()
 {
     char *input;
+    char *home;
     char **command;
     pid_t pid;
     int buf_size = 128;
@@ -39,13 +40,27 @@ int main()
             continue;
         }
 
-        // Exit builtin
+        // The exit builtin
         if (strcmp(command[0], "exit") == 0) {
             if (atoi(command[1]) >= 0  && atoi(command[1]) <= 255) {
                 exit(atoi(command[1]));
             } else {
                 exit(0);
             }
+        }
+
+        // The cd builtin
+        if (strcmp(command[0], "cd") == 0) {
+            if (chdir(command[1]) < 0) {
+                if (strcmp(command[1], "~") == 0) {
+                    home = getenv("HOME");
+                    chdir(home);
+                } else {
+                    perror(command[1]);
+                }
+            }
+
+            continue;
         }
 
         pid = fork();
