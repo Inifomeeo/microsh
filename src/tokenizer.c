@@ -12,7 +12,7 @@ char **tokenize_input(char *input, char *delim)
     int index = 0;
     char **tokens = malloc(buf_size * sizeof(char *));
     if (tokens == NULL) {
-        perror("malloc");
+        perror("malloc: char **tokens");
         exit(1);
     }
     char *token;
@@ -26,7 +26,7 @@ char **tokenize_input(char *input, char *delim)
             buf_size += buf_size;
             tokens = realloc(tokens, buf_size * sizeof(char *));
             if (tokens == NULL) {
-                perror("realloc");
+                perror("realloc: tokens");
                 exit(1);
             }
         }
