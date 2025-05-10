@@ -1,2 +1,2 @@
-# unix-shell
+# microsh
 A basic Unix shell 
