@@ -5,10 +5,22 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <signal.h>
+#include <setjmp.h>
 
 #include "tokenizer.h"
 
 #define DELIM " \t\r\n\a"
+
+static sigjmp_buf env;
+static volatile sig_atomic_t jump_active = 0;
+
+void sigint_handler(int signum) {
+    if (!jump_active) {
+        return;
+    }
+    siglongjmp(env, 3490);
+}
 
 typedef struct {
     char *buffer;
@@ -59,8 +71,26 @@ int main()
     int exit_status;
     int stat_loc;
     InputBuffer* input_buffer;
+
+    // Setup SIGINT
+    struct sigaction sa = {
+        .sa_handler = sigint_handler,
+        .sa_flags = SA_RESTART,
+        .sa_mask = 0,
+    };
+    if (sigaction(SIGINT, &sa, NULL) < 0) {
+        perror("sigaction");
+        exit(1);
+    }
     
     while (1) {
+        if (sigsetjmp(env, 1) == 3490) {
+            printf("\n");
+            continue;
+        }
+
+        jump_active = 1;
+
         // Print prompt
         printf("$ ");
         fflush(stdout);
@@ -102,6 +132,16 @@ int main()
 
         pid = fork();
         if (pid == 0) {
+            struct sigaction sa_child = {
+                .sa_handler = sigint_handler,
+                .sa_flags = SA_RESTART,
+                .sa_mask = 0,
+            };
+            if (sigaction(SIGINT, &sa_child, NULL) < 0) {
+                perror("sigaction");
+                exit(1);
+            }
+
             if (execvp(command[0], command) < 0) {
                 perror("execvp: command not found");
                 exit(1);
