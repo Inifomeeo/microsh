@@ -8,6 +8,8 @@
 
 #include "tokenizer.h"
 
+#define DELIM " \t\r\n\a"
+
 typedef struct {
     char *buffer;
     size_t buffer_length;
@@ -18,7 +20,7 @@ InputBuffer *new_input_buffer()
 {
     InputBuffer *input_buffer = (InputBuffer *)malloc(sizeof(InputBuffer));
     if (input_buffer == NULL) {
-        perror("malloc: InputBuffer *input_buffer");
+        fprintf(stderr, "allocation error\n");
         exit(1);
     }
 
@@ -67,7 +69,7 @@ int main()
         input_buffer = new_input_buffer();
         read_line(input_buffer);
 
-        command = tokenize_input(input_buffer->buffer, " ");
+        command = tokenize_input(input_buffer->buffer, DELIM);
         if (!command[0]) {
             free_input_buffer(input_buffer);
             free(command);
