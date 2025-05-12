@@ -11,22 +11,21 @@ char **tokenize_input(char *input, char *delim)
     int buf_size = 10;
     int index = 0;
     char **tokens = malloc(buf_size * sizeof(char *));
-    if (tokens == NULL) {
-        perror("malloc: char **tokens");
+    if (!tokens) {
+        fprintf(stderr, "allocation error\n");
         exit(1);
     }
     char *token;
 
     token = strtok(input, delim);
     while (token != NULL) {
-        tokens[index] = token;
-        index++;
+        tokens[index++] = token;
 
         if (index >= buf_size) {
             buf_size += buf_size;
             tokens = realloc(tokens, buf_size * sizeof(char *));
-            if (tokens == NULL) {
-                perror("realloc: tokens");
+            if (!tokens) {
+                fprintf(stderr, "re-allocation error\n");
                 exit(1);
             }
         }
