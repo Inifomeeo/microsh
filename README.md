@@ -4,25 +4,25 @@
 
 ## Quick Start
 
-1. Clone the project
+Clone the project
 
 ```bash
   git clone https://github.com/Inifomeeo/microsh
 ```
 
-2. Go to the project directory
+Go to the project directory
 
 ```bash
   cd microsh
 ```
 
-3. Build the project
+Build the project
 
 ```bash
   make
 ```
 
-4. Run the shell
+Run the shell
 
 ```bash
   ./build/shell
