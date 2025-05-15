@@ -1,28 +1,34 @@
 # Microsh
-A basic Unix shell
 
-## Installation
+**Microsh** is a basic Unix shell. It provides a command-line interface that allows users to interact with the operating system by executing commands, managing processes, and navigating the file system. The shell supports fundamental features such as running built-in and external commands, handling input/output redirection, and managing background processes.
 
-Clone the project
+## Quick Start
+
+1. Clone the project
 
 ```bash
   git clone https://github.com/Inifomeeo/microsh
 ```
 
-Go to the project directory
+2. Go to the project directory
 
 ```bash
   cd microsh
 ```
 
-Build the project
+3. Build the project
 
 ```bash
   make
 ```
 
-Run the program
+4. Run the shell
 
 ```bash
   ./build/shell
+```
+## Usage
+
+```bash
+  $ command
 ```
